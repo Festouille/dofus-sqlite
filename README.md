@@ -111,7 +111,7 @@ Releases are produced by 2 GitHub Actions workflows that chain together automati
 **Workflow 2** downloads the game files in a `setup` job, then runs these jobs in parallel:
 
 - **data**: parses `Data/**/*.bundle` and `I18n/*.bin` to JSON (`pnpm extract`), generates `dofus.sqlite` (`pnpm db`), uploads both
-- **proto**: runs `Il2CppDumper.exe` then `protodec.exe` on `GameAssembly.dll` + `global-metadata.dat` → `dofus.proto`
+- **proto**: runs `protodec.exe il2cpp` on `GameAssembly.dll` + `global-metadata.dat` (+ `globalgamemanagers`) → `dofus.proto`
 - **maps**: parses `Map/Data/**/*.bundle` → `maps.sqlite` (`pnpm maps`)
 - **images**: exports `Picto/**/*.bundle` → `images-<category>.zip` (`dotnet cs/... images <picto folder> <output folder>`)
 
