@@ -98,6 +98,7 @@ jobs:
                   npx cytrus-v6 download --game dofus --release dofus3 --output parser/temp-binaries/
                   --select **/GameAssembly.dll
                   --select **/global-metadata.dat
+                  --select **/globalgamemanagers
 
             - name: Download map bundles
               run: >
@@ -222,12 +223,8 @@ jobs:
                   name: game-binaries
                   path: parser/temp/
 
-            - name: Run Il2CppDumper
-              shell: pwsh
-              run: .\Il2CppDumper\Il2CppDumper.exe .\parser\temp\GameAssembly.dll .\parser\temp\Dofus_Data\il2cpp_data\Metadata\global-metadata.dat
-
             - name: Run protodec
-              run: .\Il2CppDumper\protodec.exe .\Il2CppDumper\DummyDll .\parser\dofus.proto --include-properties-without-non-user-code-attribute
+              run: .\Il2CppDumper\protodec.exe il2cpp .\parser\temp\GameAssembly.dll .\parser\temp\Dofus_Data\il2cpp_data\Metadata\global-metadata.dat .\parser\temp\Dofus_Data\globalgamemanagers .\parser\dofus.proto --include-properties-without-non-user-code-attribute
 
             - name: Upload proto to pre-release
               env:
